@@ -1,0 +1,63 @@
+---
+title: "data-exploration"
+author: "Inna Galat"
+date: "8 July 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+ptStart <- proc.time()
+
+library(data.table)
+library(ggplot2)
+library(corrplot)
+
+projpath <- file.path("~","Github", "sales-prediction-r")
+datapath <- file.path(projpath,"data")
+```
+
+## Preface
+
+### 1. Reading Datasets
+
+```{r datasets-reading}
+
+train <- fread(file.path(datapath,"Train_UWu5bXk.txt"))
+test <- fread(file.path(datapath,"Test_u94Q5KV.txt"))
+names(train)
+names(test)
+summary(train)
+head(train,4)
+
+dplyr::count(unique(train[,1]))
+lapply(train[,c(3,5,9,10,11)],unique)
+dplyr::count(unique(train[,7]))
+```
+
+Item_Outlet_Sales column is a target variable, which is present only in train dataset. The rest of columns are dependent variables.
+
+Item_identifier: 1556 unique values, character;
+Item_weight: numerical variable, float;
+Item_fat_content: at the moment shows 5 levels. After cleaning and fixing number of unique levels will drop;
+Item_Visibility: ??percentage 
+Item_type: 16 levels, may need some grouping by diff categories;
+Item_MRP: numerical variable, float;
+Outlet_identifier: character, has 10 unique levels;
+Outlet_Establishment_Year: ordinal variable showing teh year;
+Outlet_Size: 4 unique values, one of which is empty, will need to be transformed to nan;
+Outlet_Location_Type: 3 unique values, may be ordinal of character;
+Outlet_Type: 4 unique levels, character;
+
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r plot, echo=FALSE}
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
